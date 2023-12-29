@@ -2,7 +2,6 @@ package org.example;
 
 
 
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -14,7 +13,7 @@ public class Main {
         System.out.println("Welcome to Address Book Program");
         Scanner sc = new Scanner(System.in);
         // AddressBook addressBook = new AddressBook();
-        String filePath = "E:\\BridgeLabz Fellowship\\eclipse\\AddressBookMain\\src\\";
+        String filePath = "E:\\BridgeLabz Fellowship\\IntelliJ\\AddressBookMain\\src\\";
 
         HashMap<String, AddressBook> addressBookHashMap = new HashMap<>();
 
@@ -22,7 +21,8 @@ public class Main {
             System.out.println(
                     "0.Exit \n1.Add Contact \n2.Display Contact \n3.Edit Contact \n4.Delete Contact \n5.Add new Address Book"
                             + "\n6.Display available address books \n7.Display all address books"
-                            + "\n8.Write addressbook to file" + "\n9.Read addressbook from file");
+                            + "\n8.Write addressbook to file" + "\n9.Read addressbook from file"
+                            + "\n10.Search by city or state ");
             int ch = sc.nextInt();
             switch (ch) {
                 case 0:
@@ -127,6 +127,19 @@ public class Main {
                         }
                     } catch (Exception exception) {
                         System.out.println(exception);
+                    }
+                    break;
+                case 10:
+                    Set<Map.Entry<String, AddressBook>> addressBook2 = addressBookHashMap.entrySet();
+                    System.out.println("Enter City or State : ");
+                    String location = sc.next();
+                    if (addressBook2.isEmpty()) {
+                        System.out.println("No address books available!");
+                    }
+                    for (Map.Entry entry : addressBook2) {
+                        System.out.println(entry.getKey());
+                        AddressBook addBook = (AddressBook) entry.getValue();
+                        addBook.searchByCityOrState(location);
                     }
                     break;
                 default:
