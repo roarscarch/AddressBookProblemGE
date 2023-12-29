@@ -1,12 +1,11 @@
 package org.example;
 
 
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
-    public static void main(String[] args) {
-        System.out.println("Welcome to address book computation program");
 
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         AddressBook addressBook = new AddressBook();
