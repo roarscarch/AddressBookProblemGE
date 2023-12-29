@@ -1,12 +1,14 @@
 package org.example;
 
+import java.io.Serializable;
 import java.util.*;
+import java.util.stream.Collectors;
 
-public class AddressBook {
+class AddressBook {
 
     private ArrayList<Contact> contacts = new ArrayList<>();
-    private HashMap<String, List<Contact>> cityContactList = new HashMap<>();
-    private HashMap<String, List<Contact>> stateContactList = new HashMap<>();
+    private static HashMap<String, List<Contact>> cityContactList = new HashMap<>();
+    private static HashMap<String, List<Contact>> stateContactList = new HashMap<>();
     private Scanner sc = new Scanner(System.in);
 
     public void addContact() {
@@ -18,7 +20,7 @@ public class AddressBook {
         System.out.println("Enter city and state : ");
         String city = sc.next();
         String state = sc.next();
-        System.out.println("Enter zip : ");
+        System.out.println("Enter zip code: ");
         int zipCode = sc.nextInt();
         System.out.println("Enter contact number : ");
         long mobileNo = sc.nextLong();
@@ -61,8 +63,8 @@ public class AddressBook {
         String name = sc.next();
         for (Contact contact : contacts) {
             if (contact.getFirstName().equals(name) || contact.getLastName().equals(name)) {
-                System.out.println("What you want to edit : \n" + "1.first name \t" + "2.last name \t" + "3.Address \t"
-                        + "4.city \t" + "5.state \t" + "6.zipcode \t" + "7.contact number \t" + "8.emailID ");
+                System.out.println("What you want to edit : \n" + "1.first name \t" + "2.last name \t" + "3.address \t"
+                        + "4.city \t" + "5.state \t" + "6.zip \t" + "7.contact number \t" + "8.email");
                 int ch = sc.nextInt();
                 switch (ch) {
                     case 1:
@@ -76,7 +78,7 @@ public class AddressBook {
                         System.out.println("Contact updated!");
                         break;
                     case 3:
-                        System.out.println("Enter Address :");
+                        System.out.println("Enter address :");
                         contact.setAddress(sc.next());
                         System.out.println("Contact updated!");
                         break;
@@ -101,7 +103,7 @@ public class AddressBook {
                         System.out.println("Contact updated!");
                         break;
                     case 8:
-                        System.out.println("Enter email :");
+                        System.out.println("Enter email ID:");
                         contact.setEmailID(sc.next());
                         System.out.println("Contact updated!");
                         break;
@@ -168,4 +170,15 @@ public class AddressBook {
                     .forEach(p -> System.out.println(p));
         }
     }
+
+    // method to get number of contact persons by city
+    public static void getCountByCity(HashMap<String, AddressBook> addressBookHashMap, String city) {
+        long count = 0;
+        for (Map.Entry<String, AddressBook> entries : addressBookHashMap.entrySet()) {
+            long cnt = entries.getValue().getContactList().stream().filter(p -> p.getCity().equals(city)).count();
+            count += cnt;
+        }
+        System.out.println(count + " Contacts in " + city);
+    }
+
 }
