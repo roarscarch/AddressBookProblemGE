@@ -11,19 +11,22 @@ public class AddressBook {
         System.out.println("Enter first and last name : ");
         String firstName = sc.next();
         String lastName = sc.next();
-        System.out.println("Enter address : ");
+        System.out.println("Enter street : ");
         String address = sc.next();
         System.out.println("Enter city and state : ");
         String city = sc.next();
         String state = sc.next();
         System.out.println("Enter zip : ");
-        int zipcode = sc.nextInt();
+        int zipCode = sc.nextInt();
         System.out.println("Enter contact number : ");
         long mobileNo = sc.nextLong();
         System.out.println("Enter email id : ");
         String emailID = sc.next();
 
-        contacts.add(new Contact(firstName, lastName, address, city, state, zipcode, mobileNo, emailID));
+        if (isDuplicate(firstName, lastName))
+            System.out.println(firstName + " " + lastName + " already exists in contacts");
+        else
+            contacts.add(new Contact(firstName, lastName, address, city, state, zipCode, mobileNo, emailID));
 
     }
 
@@ -39,7 +42,7 @@ public class AddressBook {
         for (Contact contact : contacts) {
             if (contact.getFirstName().equals(name) || contact.getLastName().equals(name)) {
                 System.out.println("What you want to edit : \n" + "1.first name \t" + "2.last name \t" + "3.address \t"
-                        + "4.city \t" + "5.state \t" + "6.zip \t" + "7.contact number \t" + "8.email");
+                        + "4.city \t" + "5.state \t" + "6.zipcode \t" + "7.contact number \t" + "8.emailID");
                 int ch = sc.nextInt();
                 switch (ch) {
                     case 1:
@@ -104,4 +107,20 @@ public class AddressBook {
         System.out.println(name + " not found!");
     }
 
+    public List<Contact> getContactList() {
+        return contacts;
+    }
+
+    /*
+     * This method is used to check the duplicate entry if first and last name
+     * already exists in address book then it will not return true i.e. duplicate
+     * entry if duplicate return true else return false
+     */
+    public boolean isDuplicate(String firstName, String lastName) {
+        boolean result = contacts.stream()
+                .filter(contact -> contact.getFirstName().equals(firstName) && contact.getLastName().equals(lastName))
+                .count() > 0;
+        return result;
+
+    }
 }
