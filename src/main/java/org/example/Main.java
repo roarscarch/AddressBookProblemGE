@@ -30,6 +30,9 @@ public class Main {
                 case 3:
                     addressBook.editContact();
                     break;
+                case 4:
+                    addressBook.deleteContact();
+                    break;
                 default:
                     System.out.println("Invalid Input");
             }
