@@ -1,11 +1,9 @@
 package org.example;
 
-import java.io.Serializable;
 import java.util.*;
-import java.util.stream.Collectors;
+
 
 class AddressBook {
-
     private ArrayList<Contact> contacts = new ArrayList<>();
     private static HashMap<String, List<Contact>> cityContactList = new HashMap<>();
     private static HashMap<String, List<Contact>> stateContactList = new HashMap<>();
@@ -15,12 +13,12 @@ class AddressBook {
         System.out.println("Enter first and last name : ");
         String firstName = sc.next();
         String lastName = sc.next();
-        System.out.println("Enter Address : ");
+        System.out.println("Enter address : ");
         String address = sc.next();
         System.out.println("Enter city and state : ");
         String city = sc.next();
         String state = sc.next();
-        System.out.println("Enter zip code: ");
+        System.out.println("Enter zip : ");
         int zipCode = sc.nextInt();
         System.out.println("Enter contact number : ");
         long mobileNo = sc.nextLong();
@@ -64,7 +62,7 @@ class AddressBook {
         for (Contact contact : contacts) {
             if (contact.getFirstName().equals(name) || contact.getLastName().equals(name)) {
                 System.out.println("What you want to edit : \n" + "1.first name \t" + "2.last name \t" + "3.address \t"
-                        + "4.city \t" + "5.state \t" + "6.zip \t" + "7.contact number \t" + "8.email");
+                        + "4.city \t" + "5.state \t" + "6.zipcode \t" + "7.contact number \t" + "8.emailID");
                 int ch = sc.nextInt();
                 switch (ch) {
                     case 1:
@@ -103,7 +101,7 @@ class AddressBook {
                         System.out.println("Contact updated!");
                         break;
                     case 8:
-                        System.out.println("Enter email ID:");
+                        System.out.println("Enter email :");
                         contact.setEmailID(sc.next());
                         System.out.println("Contact updated!");
                         break;
@@ -135,7 +133,7 @@ class AddressBook {
 
     /*
      * This method is used to check the duplicate entry if first and last name
-     * already exists in address book then it will not return true i.e. duplicate
+     * already exists in addressbook then it will not return true i.e. duplicate
      * entry if duplicate return true else return false
      */
     public boolean isDuplicate(String firstName, String lastName) {
@@ -179,6 +177,16 @@ class AddressBook {
             count += cnt;
         }
         System.out.println(count + " Contacts in " + city);
+    }
+
+    // method to sort the entries alphabetically by person's Name
+    public static void sortByName(HashMap<String, AddressBook> addressBookHashMap) {
+        List<Contact> list = new ArrayList<>();
+        for (Map.Entry<String, AddressBook> entries : addressBookHashMap.entrySet()) {
+            list = new ArrayList<>(entries.getValue().getContactList());
+        }
+        list.stream().sorted((p1, p2) -> ((String) p1.getFirstName()).compareTo(p2.getFirstName()))
+                .forEach(contact -> System.out.println(contact));
     }
 
 }
